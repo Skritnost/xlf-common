@@ -1,34 +1,35 @@
 {
-  "name": "xlf-merge",
-  "version": "2.0.1",
-  "description": "Command-line tool for merging XLF files",
+  "name": "xlf-common",
+  "version": "1.0.0",
+  "description": "Command-line tool for extracting common trans-units from XLF files",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "xlf-merge": "./index.js"
+    "xlf-common": "./index.js"
   },
-  "author": "Jaroslav Svak",
+  "author": "Andrei Ko",
   "license": "MIT",
   "keywords": [
     "XLIFF",
     "XLF",
     "Merge",
+    "Common",
     "Tool",
     "Angular"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jaroslavsvak/xlf-merge.git"
+    "url": "git+https://github.com/Skritnost/xlf-merge.git"
   },
   "bugs": {
-    "url": "https://github.com/jaroslavsvak/xlf-merge/issues"
+    "url": "https://github.com/Skritnost/xlf-merge/issues"
   },
-  "homepage": "https://github.com/jaroslavsvak/xlf-merge#readme",
+  "homepage": "https://github.com/Skritnost/xlf-merge#readme",
   "dependencies": {
     "chalk": "^4.1.0",
-    "commander": "^7.2.0",
+    "commander": "^8.1.0",
     "shelljs": "^0.8.4",
     "xml-js": "^1.6.11"
   }

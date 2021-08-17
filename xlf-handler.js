@@ -51,45 +51,6 @@ function convertToPlainText(src) {
     return result;
 }
 
-function convertToXml(entry) {
-    if (entry.transElement) {
-        return [entry.transElement];
-    }
-
-    const elements = [];
-
-    let start = 0;
-
-    do {
-        const i = entry.text.indexOf('{$', start);
-        if (i === -1) {
-            elements.push({ type: 'text', text: entry.text.substr(start) });
-            break; 
-        }
-
-        const endIndex = entry.text.indexOf('}', start);
-        if (endIndex === -1) {
-            throw new Error('Failed to convert text. Invalid placeholder format in:\n' + entry.text);
-        }
-
-        if (i - start > 0) {
-            elements.push({ type: 'text', text: entry.text.substring(start, i) });
-        }
-
-        elements.push({
-            type: 'element',
-            name: 'x',
-            attributes: {
-                id: entry.text.substring(i + 2, endIndex)
-            }
-        });
-
-        start = endIndex + 1;
-    } while (entry.text.length > start);
-
-    return elements;
-}
-
 function* getTransUnits(root) {
     if (!root.elements) {
         return;
@@ -111,16 +72,16 @@ module.exports.createParser = function (fileContent) {
         
             for (const transUnit of getTransUnits(root)) {
                 const id = transUnit.attributes.id;
-                const transElement = getElement(transUnit, ['target']);
-                const text = convertToPlainText(transElement);
+                const sourceElement = getElement(transUnit, ['source']);
+                const text = convertToPlainText(sourceElement);
         
-                yield { id, transElement, text };
+                yield { id, transUnit, text };
             }
         }
     };
 }
 
-module.exports.save = function (translatedEntries, locale) {
+module.exports.save = function (translatedEntries) {
     const xml = {
         declaration: {
             attributes: {
@@ -142,16 +103,14 @@ module.exports.save = function (translatedEntries, locale) {
                     {
                         type: 'element',
                         name: 'file',
+                        attributes: {
+                            'source-language': 'en-US',
+                        },
                         elements: [
                             {
                                 type: 'element',
                                 name: 'body',
-                                elements: translatedEntries.map(e => ({
-                                    type: 'element',
-                                    name: 'trans-unit',
-                                    attributes: { id: e.id },
-                                    elements: convertToXml(e)
-                                }))
+                                elements: translatedEntries.map(e => e.transUnit)
                             }
                         ]
                     }
@@ -160,5 +119,5 @@ module.exports.save = function (translatedEntries, locale) {
         ]
     };
 
-    return xmlJs.js2xml(xml);
+    return xmlJs.js2xml(xml, { spaces: 2 });
 };
