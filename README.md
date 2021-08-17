@@ -1,4 +1,4 @@
-# xlf-merge
+# xlf-common
 Command line tool that extract common translations of any number of XLF 1.2 files.
 Input and output is tested and compatible with Angular compiler.
 
@@ -8,10 +8,10 @@ many small files, you can run this tool to merge them before invoking the Angula
 
 ## Installation
 ```bash
-# Install globally (run by xlf-merge <parameters>)
+# Install globally (run by xlf-common <parameters>)
 npm install xlf-common -g
 
-# Install locally as development tool (run by node ./node_modules/xlf-merge <parameters>)
+# Install locally as development tool (run by node ./node_modules/xlf-common <parameters>)
 npm install xlf-common --save-dev
 ```
 
@@ -22,14 +22,14 @@ npm install xlf-common --save-dev
 - Requires single output file path (--output parameter) to merge translated texts
 ```bash
 # Extract common translations from three input files into output.xlf
-xlf-merge input1.xlf input2.xlf input3.xlf --output all-translations.xlf
+xlf-common input1.xlf input2.xlf input3.xlf --output all-translations.xlf
 ```
 
 ## Example set-up
 Supposing XLF files are in path src/i18n/**.
 German translations have pattern *.de.xlf, Swedish translations have pattern *.sv.xlf.
-- Install Xlf-merge locally by running "npm install --save-dev xlf-merge"
-- Run xlf-merge before production build of Angular application
+- Install Xlf-common locally by running "npm install --save-dev xlf-common"
+- Run xlf-common before production build of Angular application
 - Write npm scripts to automate the entire build task, for example:
 ```json
 "scripts": {
